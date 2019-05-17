@@ -9,7 +9,7 @@ public class StrutturaDati {
 	private ArrayList<StrutturaDati> attributi;
 	private boolean isText = false;
 
-	public StrutturaDati() {
+	protected StrutturaDati() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -29,19 +29,19 @@ public class StrutturaDati {
 		return attributi;
 	}
 
-	public void setNome(String nome) {
+	protected void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public void setTag(String tag) {
+	protected void setTag(String tag) {
 		this.tag = tag;
 	}
 
-	public void setAttributi(ArrayList<StrutturaDati> attributi) {
+	protected void setAttributi(ArrayList<StrutturaDati> attributi) {
 		this.attributi = attributi;
 	}
 
-	public void setIsText(boolean isText) {
+	protected void setIsText(boolean isText) {
 		this.isText = isText;
 	}
 

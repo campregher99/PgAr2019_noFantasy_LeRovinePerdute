@@ -6,7 +6,7 @@ public class LetturaScrittura {
 	private String pathInputFile;
 	private String pathFormatInput;
 
-	public LetturaScrittura() {
+	protected LetturaScrittura() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -28,12 +28,12 @@ public class LetturaScrittura {
 		return false;
 	}
 
-	public boolean setPathFormatInput(String pathFormatInput) {
+	protected boolean setPathFormatInput(String pathFormatInput) {
 		this.pathFormatInput = pathFormatInput;
 		return false;
 	}
 
-	public boolean setPathInputFile(String pathInputFile) {
+	protected boolean setPathInputFile(String pathInputFile) {
 		this.pathInputFile = pathInputFile;
 		return false;
 	}
