@@ -3,9 +3,12 @@ package XMLManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.Spring;
+
 public class StrutturaDati {
 	private String nome;
-	private String tag;
+	private HashMap<String, String> tag = new HashMap<String, String>();
+	private ArrayList<String> indiciKey = new ArrayList<String>();
 	private ArrayList<StrutturaDati> attributi;
 	private boolean isText = false;
 
@@ -21,27 +24,39 @@ public class StrutturaDati {
 		return isText;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getTag(String key) {
+		return tag.get(key);
+	}
+
+	public String getTag(int i) {
+		return tag.get(this.indiciKey.get(i));
 	}
 
 	public ArrayList<StrutturaDati> getAttributi() {
 		return attributi;
 	}
 
-	protected void setNome(String nome) {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	protected void setTag(String tag) {
-		this.tag = tag;
+	public void setTag(String tag, String valore) {
+		this.tag.put(tag, valore);
 	}
 
-	protected void setAttributi(ArrayList<StrutturaDati> attributi) {
+	public void removeTag(String tag) {
+		this.tag.remove(tag);
+	}
+
+	public void removeTag(int i) {
+		this.tag.remove(this.indiciKey.get(i));
+	}
+
+	public void setAttributi(ArrayList<StrutturaDati> attributi) {
 		this.attributi = attributi;
 	}
 
-	protected void setIsText(boolean isText) {
+	public void setIsText(boolean isText) {
 		this.isText = isText;
 	}
 

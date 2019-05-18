@@ -2,9 +2,8 @@ package XMLManager;
 
 import java.util.*;
 
-public class LetturaScrittura {
+class LetturaScrittura {
 	private String pathInputFile;
-	private String pathFormatInput;
 
 	protected LetturaScrittura() {
 		// TODO Auto-generated constructor stub
@@ -33,11 +32,6 @@ public class LetturaScrittura {
 	}
 
 	protected boolean isEmpty() {
-		return false;
-	}
-
-	protected boolean setPathFormatInput(String pathFormatInput) {
-		this.pathFormatInput = pathFormatInput;
 		return false;
 	}
 
