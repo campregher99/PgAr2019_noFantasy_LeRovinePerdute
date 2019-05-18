@@ -20,6 +20,14 @@ public class LetturaScrittura {
 		return attributi;
 	}
 
+	protected boolean scriviElemento(StrutturaDati input) {
+		return false;
+	}
+
+	private boolean scriviAttributo(StrutturaDati input) {
+		return false;
+	}
+
 	protected boolean isElementi() {
 		return false;
 	}

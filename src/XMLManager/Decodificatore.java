@@ -12,4 +12,8 @@ public class Decodificatore {
 	public StrutturaDati getFile() {
 		return file;
 	}
+
+	public boolean scriviFile(StrutturaDati input) {
+		return false;
+	}
 }
