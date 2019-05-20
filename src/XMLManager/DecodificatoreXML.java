@@ -1,10 +1,10 @@
 package XMLManager;
 
-public class Decodificatore {
+public class DecodificatoreXML {
 	private LetturaScrittura inputFile;
 	private StrutturaDati file;
 
-	public Decodificatore() {
+	public DecodificatoreXML() {
 
 	}
 

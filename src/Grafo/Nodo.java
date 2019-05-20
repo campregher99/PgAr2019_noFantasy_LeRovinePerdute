@@ -3,16 +3,24 @@ package Grafo;
 import java.util.*;
 
 public class Nodo {
+	private int id;
+	private static int idAttuale = 0;
 	private HashMap<String, String> stringhe = new HashMap<String, String>();
 	private HashMap<String, Double> doppio = new HashMap<String, Double>();
 	private HashMap<String, Boolean> booleani = new HashMap<String, Boolean>();
-	private HashMap<String, Integer> uscite = new HashMap<String, Integer>();
-	private HashMap<String, Integer> entrate = new HashMap<String, Integer>();
+	private HashMap<Integer, Integer> uscite = new HashMap<Integer, Integer>();
+	private HashMap<Integer, Integer> entrate = new HashMap<Integer, Integer>();
 
 	public Nodo(HashMap<String, String> stringhe, HashMap<String, Double> doppio, HashMap<String, Boolean> booleani) {
 		this.booleani = booleani;
 		this.doppio = doppio;
 		this.stringhe = stringhe;
+		id = idAttuale;
+		idAttuale++;
+	}
+
+	public Nodo() {
+
 	}
 
 	public HashMap<String, String> getStringhe() {
@@ -53,6 +61,10 @@ public class Nodo {
 
 	public Integer getEntrate(String nome) {
 		return entrate.get(nome);
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public void setAttributo(String nome, String stringa) {

@@ -1,9 +1,6 @@
 package XMLManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import javax.swing.Spring;
+import java.util.*;
 
 public class StrutturaDati {
 	private String nome;
