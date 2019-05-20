@@ -13,6 +13,7 @@ class LetturaScrittura {
 	private XMLOutputFactory xmlof = null;
 	private XMLStreamWriter xmlw = null;
 	StrutturaDati file;
+	StrutturaDati vuoto = new StrutturaDati();
 
 	protected boolean leggiFile() {
 		Stack<StrutturaDati> elementoAttuale = new Stack<StrutturaDati>();
@@ -20,41 +21,65 @@ class LetturaScrittura {
 			while (xmlr.hasNext()) {
 				switch (xmlr.getEventType()) {
 				case XMLStreamConstants.START_DOCUMENT:
-					file = new StrutturaDati(xmlr.getLocalName());
-					elementoAttuale.push(file);
 					break;
 				case XMLStreamConstants.START_ELEMENT:
-					StrutturaDati newElemento = new StrutturaDati(xmlr.getLocalName());
-					elementoAttuale.push(newElemento);
+					file = letturaElemento();
+				}
+				xmlr.next();
+			}
+			return true;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+
+	private StrutturaDati letturaElemento() {
+		StrutturaDati newStruttura = null;
+		boolean isPrimo = true;
+		try {
+			while (xmlr.hasNext()) {
+				switch (xmlr.getEventType()) {
+				case XMLStreamConstants.START_DOCUMENT:
+					return vuoto;
+				case XMLStreamConstants.START_ELEMENT:
+					if (isPrimo) {
+						newStruttura = new StrutturaDati(xmlr.getLocalName());
+						for (int i = 0; i < xmlr.getAttributeCount(); i++) {
+							newStruttura.addTag(xmlr.getAttributeLocalName(i), xmlr.getAttributeValue(i));
+						}
+						isPrimo = false;
+					} else {
+						newStruttura.addAttributo(letturaElemento());
+					}					
 					break;
 				case XMLStreamConstants.END_ELEMENT:
-					elementoAttuale.pop();
-					break;
-				case XMLStreamConstants.END_DOCUMENT:
-					return true;
+					return newStruttura;
 				case XMLStreamConstants.CHARACTERS:
 					if (xmlr.getText().trim().length() > 0) {
 						StrutturaDati newText = new StrutturaDati(xmlr.getText());
 						newText.setIsText(true);
-						elementoAttuale.peek().addAttributo(newText);
+						newStruttura.addAttributo(newText);
 					}
 					break;
 				case XMLStreamConstants.ATTRIBUTE:
-					for (int i = 0; i < xmlr.getAttributeCount(); i++) {
-						elementoAttuale.peek().addTag(xmlr.getAttributeLocalName(i), xmlr.getAttributeValue(i));
-					}
+					
 					break;
 				}
 				xmlr.next();
 			}
 		} catch (Exception e) {
-			return false;
+			return vuoto;
 		}
-		return false;
+		return vuoto;
 	}
 
 	protected StrutturaDati getFile() {
 		return file;
+	}
+
+	public StrutturaDati getVuoto() {
+		return vuoto;
 	}
 
 	protected boolean scriviFile(StrutturaDati input, String nomeFile, String formato, String versione) {

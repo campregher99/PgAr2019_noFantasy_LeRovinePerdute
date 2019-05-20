@@ -6,7 +6,7 @@ public class StrutturaDati {
 	private String nome;
 	private HashMap<String, String> tag = new HashMap<String, String>();
 	private ArrayList<String> indiciKey = new ArrayList<String>();
-	private ArrayList<StrutturaDati> attributi;
+	private ArrayList<StrutturaDati> attributi= new ArrayList<StrutturaDati>();
 	private boolean isText = false;
 
 	protected StrutturaDati(String nome) {

@@ -1,7 +1,7 @@
 package XMLManager;
 
 public class DecodificatoreXML {
-	private LetturaScrittura inputFile;
+	private LetturaScrittura inputFile = new LetturaScrittura();
 
 	public boolean leggiFile(String pathInputFile) {
 		if (!inputFile.setPathInputFile(pathInputFile))
@@ -13,9 +13,9 @@ public class DecodificatoreXML {
 
 	public StrutturaDati getFile() {
 		try {
-		return inputFile.getFile();
-		}catch(Exception e) {
-			StrutturaDati vuoto=new StrutturaDati();
+			return inputFile.getFile();
+		} catch (Exception e) {
+			StrutturaDati vuoto = new StrutturaDati();
 			return vuoto;
 		}
 	}
