@@ -8,17 +8,11 @@ import javax.xml.stream.*;
 import java.io.*;
 
 class LetturaScrittura {
-	private static final String ERRORE_NELL_INIZIALIZZAZIONE_DEL_READER = "Errore nell'inizializzazione del reader:";
 	private XMLInputFactory xmlif = null;
 	private XMLStreamReader xmlr = null;
 	private XMLOutputFactory xmlof = null;
 	private XMLStreamWriter xmlw = null;
-	private String pathInputFile;
 	StrutturaDati file;
-
-	protected LetturaScrittura() {
-		// TODO Auto-generated constructor stub
-	}
 
 	protected boolean leggiFile() {
 		Stack<StrutturaDati> elementoAttuale = new Stack<StrutturaDati>();
@@ -71,29 +65,48 @@ class LetturaScrittura {
 		} catch (Exception e) {
 			return false;
 		}
-		if (scriviElemento(input))
-			return true;
+		if (scriviElemento(input)) {
+			try {
+				xmlw.writeEndDocument();
+				return true;
+			} catch (Exception e) {
+			}
+		}
 		return false;
 	}
 
 	private boolean scriviElemento(StrutturaDati input) {
+		// controlla se all'interno dell'elemento ci sono altri elementi oppure del
+		// testo
 		if (input.isText()) {
+			// in caso ci sia del testo lo scrivo come tale
 			try {
 				xmlw.writeCharacters(input.getNome());
+				xmlw.writeEndElement();
+				return true;
 			} catch (Exception e) {
 				return false;
 			}
 		} else {
+			// altrimenti scrivo tutti gli elementi in modo ricorsivo
 			try {
 				xmlw.writeStartElement(input.getNome());
-				for(Entry<String, String> tag : input.getTag().entrySet()) {
+				for (Entry<String, String> tag : input.getTag().entrySet()) {
 					xmlw.writeAttribute(tag.getKey(), input.getTag(tag.getKey()));
 				}
 			} catch (Exception e) {
 				return false;
 			}
+			for (StrutturaDati att : input.getAttributi()) {
+				if (!scriviElemento(att))
+					return false;
+			}
+			try {
+				xmlw.writeEndElement();
+			} catch (Exception e) {
+				return false;
+			}
 		}
-		
 		return false;
 	}
 
@@ -104,7 +117,6 @@ class LetturaScrittura {
 		} catch (Exception e) {
 			return false;
 		}
-		this.pathInputFile = pathInputFile;
 		return true;
 	}
 }

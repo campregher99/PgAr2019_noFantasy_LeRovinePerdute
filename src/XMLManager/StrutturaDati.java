@@ -13,6 +13,10 @@ public class StrutturaDati {
 		this.nome = nome;
 	}
 
+	protected StrutturaDati() {
+		nome="vuoto";
+	}
+	
 	public String getNome() {
 		return nome;
 	}
