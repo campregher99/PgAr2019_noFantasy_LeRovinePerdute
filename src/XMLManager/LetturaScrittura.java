@@ -69,6 +69,7 @@ class LetturaScrittura {
 				xmlr.next();
 			}
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			return vuoto;
 		}
 		return vuoto;
@@ -88,6 +89,7 @@ class LetturaScrittura {
 			xmlw = xmlof.createXMLStreamWriter(new FileOutputStream(nomeFile + ".xml"), formato);
 			xmlw.writeStartDocument(formato, versione);
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			return false;
 		}
 		if (scriviElemento(input)) {
@@ -95,6 +97,7 @@ class LetturaScrittura {
 				xmlw.writeEndDocument();
 				return true;
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 		}
 		return false;
@@ -107,8 +110,6 @@ class LetturaScrittura {
 			// in caso ci sia del testo lo scrivo come tale
 			try {
 				xmlw.writeCharacters(input.getNome());
-				xmlw.writeEndElement();
-				return true;
 			} catch (Exception e) {
 				return false;
 			}
@@ -120,6 +121,7 @@ class LetturaScrittura {
 					xmlw.writeAttribute(tag.getKey(), input.getTag(tag.getKey()));
 				}
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 				return false;
 			}
 			for (StrutturaDati att : input.getAttributi()) {
@@ -129,10 +131,11 @@ class LetturaScrittura {
 			try {
 				xmlw.writeEndElement();
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	protected boolean setPathInputFile(String pathInputFile) {
