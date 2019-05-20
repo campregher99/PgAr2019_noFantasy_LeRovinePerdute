@@ -9,8 +9,8 @@ public class StrutturaDati {
 	private ArrayList<StrutturaDati> attributi;
 	private boolean isText = false;
 
-	protected StrutturaDati() {
-		// TODO Auto-generated constructor stub
+	protected StrutturaDati(String nome) {
+		this.nome = nome;
 	}
 
 	public String getNome() {
@@ -21,6 +21,9 @@ public class StrutturaDati {
 		return isText;
 	}
 
+	public HashMap<String, String> getTag(){
+		return tag;
+	}
 	public String getTag(String key) {
 		return tag.get(key);
 	}
@@ -37,20 +40,36 @@ public class StrutturaDati {
 		this.nome = nome;
 	}
 
-	public void setTag(String tag, String valore) {
+	public void addTag(String tag, String valore) {
+		indiciKey.add(tag);
 		this.tag.put(tag, valore);
 	}
 
+	public boolean setTag(String tag, String valore) {
+		try {
+			this.tag.replace(tag, valore);
+		} catch (Exception i) {
+			return false;
+		}
+		return true;
+	}
+
 	public void removeTag(String tag) {
+		indiciKey.remove(tag);
 		this.tag.remove(tag);
 	}
 
 	public void removeTag(int i) {
 		this.tag.remove(this.indiciKey.get(i));
+		indiciKey.remove(i);
 	}
 
-	public void setAttributi(ArrayList<StrutturaDati> attributi) {
+	public void addAttributi(ArrayList<StrutturaDati> attributi) {
 		this.attributi = attributi;
+	}
+
+	public void addAttributo(StrutturaDati attributo) {
+		this.attributi.add(attributo);
 	}
 
 	public void setIsText(boolean isText) {

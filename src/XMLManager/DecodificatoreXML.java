@@ -8,6 +8,10 @@ public class DecodificatoreXML {
 
 	}
 
+	public boolean leggiFile() {
+		return false;
+	}
+
 	public StrutturaDati getFile() {
 		return file;
 	}
