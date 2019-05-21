@@ -16,7 +16,6 @@ class LetturaScrittura {
 	StrutturaDati vuoto = new StrutturaDati();
 
 	protected boolean leggiFile() {
-		Stack<StrutturaDati> elementoAttuale = new Stack<StrutturaDati>();
 		try {
 			while (xmlr.hasNext()) {
 				switch (xmlr.getEventType()) {

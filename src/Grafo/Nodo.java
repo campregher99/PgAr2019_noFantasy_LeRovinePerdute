@@ -1,6 +1,7 @@
 package Grafo;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 public class Nodo {
 	private int id;
@@ -47,19 +48,19 @@ public class Nodo {
 		return booleani.get(nome);
 	}
 
-	public HashMap<String, Integer> getUscite() {
+	public HashMap<Integer, Integer> getUscite() {
 		return uscite;
 	}
 
-	public Integer getUscite(String nome) {
+	public Integer getUscite(Integer nome) {
 		return uscite.get(nome);
 	}
 
-	public HashMap<String, Integer> getEntrate() {
+	public HashMap<Integer, Integer> getEntrate() {
 		return entrate;
 	}
 
-	public Integer getEntrate(String nome) {
+	public Integer getEntrate(Integer nome) {
 		return entrate.get(nome);
 	}
 
@@ -67,31 +68,61 @@ public class Nodo {
 		return id;
 	}
 
-	public void setAttributo(String nome, String stringa) {
-
+	public boolean setAttributo(String nome, String stringa) {
+		for(Map.Entry<String,String> key : this.stringhe.entrySet()) {
+			if(key.getKey().equals(nome)) {
+				this.stringhe.replace(nome, stringa);
+				return true;
+			}
+		}
+		return false;
 	}
 
-	public void setAttributo(String nome, Double doppio) {
-
+	public boolean setAttributo(String nome, Double doppio) {
+		for(Map.Entry<String,Double> key : this.doppio.entrySet()) {
+			if(key.getKey().equals(nome)) {
+				this.doppio.replace(nome, doppio);
+				return true;
+			}
+		}
+		return false;
 	}
 
-	public void setAttributo(String nome, Boolean booleano) {
-
+	public boolean setAttributo(String nome, Boolean booleano) {
+		for(Map.Entry<String,Boolean> key : this.booleani.entrySet()) {
+			if(key.getKey().equals(nome)) {
+				this.booleani.replace(nome, booleano);
+				return true;
+			}
+		}
+		return false;
 	}
 
-	public void addUscita(String nome, Integer indiceArco) {
+	public void addUscita(Integer nome, Integer indiceArco) {
 		this.uscite.put(nome, indiceArco);
 	}
 
 	public boolean removeUscita(String nome) {
+		for(Entry<Integer, Integer> key : this.uscite.entrySet()) {
+			if(key.getKey().equals(nome)) {
+				this.uscite.remove(key.getKey());
+				return true;
+			}
+		}
 		return false;
 	}
 
-	public void addEntrate(String nome, Integer indiceArco) {
+	public void addEntrate(Integer nome, Integer indiceArco) {
 		this.entrate.put(nome, indiceArco);
 	}
 
 	public boolean removeEntrata(String nome) {
+		for(Entry<Integer, Integer> key : this.entrate.entrySet()) {
+			if(key.getKey().equals(nome)) {
+				this.entrate.remove(key.getKey());
+				return true;
+			}
+		}
 		return false;
 	}
 }
