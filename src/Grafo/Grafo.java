@@ -17,6 +17,18 @@ public class Grafo {
 		this.keyDoppio = keyDoppio;
 		this.keyBooleani = keyBooleani;
 	}
+	
+	public ArrayList<String> getKeyStringhe() {
+		return keyStringhe;
+	}
+	
+	public ArrayList<String> getKeyDoppio() {
+		return keyDoppio;
+	}
+	
+	public ArrayList<String> getKeyBooleani() {
+		return keyBooleani;
+	}
 
 	public Nodo getVuoto() {
 		return vuoto;
