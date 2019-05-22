@@ -11,8 +11,10 @@ public class Grafo {
 	private ArrayList<Double> archi = new ArrayList<Double>();
 	private Nodo vuoto = new Nodo();
 
-	public Grafo() {
-		// TODO Auto-generated constructor stub
+	public Grafo(ArrayList<String> keyStringhe, ArrayList<String> keyDoppio, ArrayList<String> keyBooleani) {
+		this.keyStringhe = keyStringhe;
+		this.keyDoppio = keyDoppio;
+		this.keyBooleani = keyBooleani;
 	}
 
 	public Nodo getVuoto() {
@@ -86,12 +88,29 @@ public class Grafo {
 		return vuoto;
 	}
 
-	public void aggiungiArco(Nodo nodo1, Nodo nodo2, Double valore) {
-
+	public boolean aggiungiArco(Nodo nodo1, Nodo nodo2, Double valore) {
+		boolean isFind1 = false;
+		boolean isFind2 = false;
+		for(int i=0; i<nodi.size();i++) {
+			if(nodo1.getId()==nodi.get(i).getId()) {
+				isFind1 = true;
+			}
+			if(nodo2.getId()==nodi.get(i).getId() && isFind1) {
+				isFind2 = true;
+			}
+		}
+		if(!isFind2) {
+			return false;
+		}
+		archi.add(valore);
+		nodo1.addUscita(nodo2.getId(), archi.size()-1);
+		nodo2.addEntrate(nodo1.getId(), archi.size()-1);
+		return true;
 	}
 
-	public boolean aggiungiNodo(ArrayList<String> stringhe, ArrayList<Double> doppio, ArrayList<Boolean> booleani) {
-		return false;
+	public void aggiungiNodo(HashMap<String, String> stringhe, HashMap<String, Double> doppio, HashMap<String, Boolean> booleani) {
+		Nodo newNodo = new Nodo(stringhe, doppio, booleani);
+		nodi.add(newNodo);
 	}
 
 	public boolean removeArco(int i) {

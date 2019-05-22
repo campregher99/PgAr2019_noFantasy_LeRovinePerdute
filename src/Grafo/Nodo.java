@@ -10,8 +10,8 @@ public class Nodo {
 	private HashMap<String, String> stringhe = new HashMap<String, String>();
 	private HashMap<String, Double> doppio = new HashMap<String, Double>();
 	private HashMap<String, Boolean> booleani = new HashMap<String, Boolean>();
-	private HashMap<Integer, Double> uscite = new HashMap<Integer, Double>();
-	private HashMap<Integer, Double> entrate = new HashMap<Integer, Double>();
+	private HashMap<Integer, Integer> uscite = new HashMap<Integer, Integer>();
+	private HashMap<Integer, Integer> entrate = new HashMap<Integer, Integer>();
 
 	public Nodo(HashMap<String, String> stringhe, HashMap<String, Double> doppio, HashMap<String, Boolean> booleani) {
 		isVuoto = false;
@@ -53,19 +53,19 @@ public class Nodo {
 		return booleani.get(nome);
 	}
 
-	public HashMap<Integer, Double> getUscite() {
+	public HashMap<Integer, Integer> getUscite() {
 		return uscite;
 	}
 
-	public Double getUscite(Integer nome) {
+	public Integer getUscite(Integer nome) {
 		return uscite.get(nome);
 	}
 
-	public HashMap<Integer, Double> getEntrate() {
+	public HashMap<Integer, Integer> getEntrate() {
 		return entrate;
 	}
 
-	public Double getEntrate(Integer nome) {
+	public Integer getEntrate(Integer nome) {
 		return entrate.get(nome);
 	}
 
@@ -103,12 +103,12 @@ public class Nodo {
 		return false;
 	}
 
-	public void addUscita(Integer nome, Double indiceArco) {
+	public void addUscita(Integer nome, Integer indiceArco) {
 		this.uscite.put(nome, indiceArco);
 	}
 
 	public boolean removeUscita(Integer nome) {
-		for(Entry<Integer, Double> key : this.uscite.entrySet()) {
+		for(Entry<Integer, Integer> key : this.uscite.entrySet()) {
 			if(key.getKey().equals(nome)) {
 				this.uscite.remove(key.getKey());
 				return true;
@@ -117,12 +117,12 @@ public class Nodo {
 		return false;
 	}
 
-	public void addEntrate(Integer nome, Double indiceArco) {
+	public void addEntrate(Integer nome, Integer indiceArco) {
 		this.entrate.put(nome, indiceArco);
 	}
 
 	public boolean removeEntrata(Integer nome) {
-		for(Entry<Integer, Double> key : this.entrate.entrySet()) {
+		for(Entry<Integer, Integer> key : this.entrate.entrySet()) {
 			if(key.getKey().equals(nome)) {
 				this.entrate.remove(key.getKey());
 				return true;
