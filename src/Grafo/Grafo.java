@@ -8,7 +8,8 @@ public class Grafo {
 	private ArrayList<String> keyDoppio = new ArrayList<String>();
 	private ArrayList<String> keyBooleani = new ArrayList<String>();
 	private ArrayList<Nodo> nodi = new ArrayList<Nodo>();
-	private ArrayList<Double> archi = new ArrayList<Double>();
+	private HashMap<Integer, Double> archi = new HashMap<Integer, Double>();
+	private static int indiciArchi = 0;
 	private Nodo vuoto = new Nodo();
 
 	public Grafo(ArrayList<String> keyStringhe, ArrayList<String> keyDoppio, ArrayList<String> keyBooleani) {
@@ -21,7 +22,7 @@ public class Grafo {
 		return vuoto;
 	}
 
-	public ArrayList<Double> getArchi() {
+	public HashMap<Integer, Double> getArchi() {
 		return archi;
 	}
 
@@ -91,49 +92,49 @@ public class Grafo {
 	public boolean aggiungiArco(Nodo nodo1, Nodo nodo2, Double valore) {
 		boolean isFind1 = false;
 		boolean isFind2 = false;
-		for(int i=0; i<nodi.size();i++) {
-			if(nodo1.getId()==nodi.get(i).getId()) {
+		for (int i = 0; i < nodi.size(); i++) {
+			if (nodo1.getId() == nodi.get(i).getId()) {
 				isFind1 = true;
 			}
-			if(nodo2.getId()==nodi.get(i).getId() && isFind1) {
+			if (nodo2.getId() == nodi.get(i).getId() && isFind1) {
 				isFind2 = true;
 			}
 		}
-		if(!isFind2) {
+		if (!isFind2) {
 			return false;
 		}
-		archi.add(valore);
-		nodo1.addUscita(nodo2.getId(), archi.size()-1);
-		nodo2.addEntrate(nodo1.getId(), archi.size()-1);
+		archi.put(indiciArchi, valore);
+		nodo1.addUscita(nodo2.getId(), indiciArchi);
+		nodo2.addEntrate(nodo1.getId(), indiciArchi);
+		indiciArchi++;
 		return true;
 	}
 
-	public void aggiungiNodo(HashMap<String, String> stringhe, HashMap<String, Double> doppio, HashMap<String, Boolean> booleani) {
+	public void aggiungiNodo(HashMap<String, String> stringhe, HashMap<String, Double> doppio,
+			HashMap<String, Boolean> booleani) {
 		Nodo newNodo = new Nodo(stringhe, doppio, booleani);
 		nodi.add(newNodo);
 	}
 
-	public boolean removeArco(int i) {
+	public boolean removeArco(int indice) {
 		try {
-			archi.get(i);
+			getArco(indice);
 		} catch (Exception e) {
-			return true;
+			return false;
 		}
-		for (int j = 0; j < nodi.size(); j++) {
-			for (Entry<Integer, Double> key : nodi.get(j).getUscite().entrySet()) {
-				if (nodi.get(j).getUscite().get(key.getKey()) == archi.get(i)) {
-					nodi.get(j).getUscite().remove(key.getKey());
+		for (int i = 0; i < nodi.size(); i++) {
+			for (Entry<Integer, Integer> key : nodi.get(i).getUscite().entrySet()) {
+				if(nodi.get(i).getUscite(key.getKey())==indice) {
+					nodi.get(i).getUscite().remove(key.getKey());
 				}
 			}
-			for (Entry<Integer, Double> key : nodi.get(j).getEntrate().entrySet()) {
-				if (nodi.get(j).getEntrate().get(key.getKey()) == archi.get(i)) {
-					nodi.get(j).getEntrate().remove(key.getKey());
+			for (Entry<Integer, Integer> key : nodi.get(i).getEntrate().entrySet()) {
+				if(nodi.get(i).getEntrate(key.getKey())==indice) {
+					nodi.get(i).getEntrate().remove(key.getKey());
 				}
 			}
 		}
-		// se rimuovo un nodo i sui archi devono rimanere all'interno dell'arreyList
-		// altrimenti si sputtanano tutti gli altri quindi sarebbe meglio avere una
-		// mappa per gli archi invece di una lista
+		archi.remove(indice);
 		return true;
 	}
 
@@ -141,31 +142,9 @@ public class Grafo {
 		if (i < 0 && i > nodi.size()) {
 			return false;
 		}
-		for (Entry<Integer, Double> key : nodi.get(i).getUscite().entrySet()) {
-			for (int j = 0; j < nodi.size(); j++) {
-				if (nodi.get(j).getId() == key.getKey()) {
-					for (Entry<Integer, Double> key2 : nodi.get(j).getEntrate().entrySet()) {
-						if (nodi.get(j).getEntrate(key2.getKey()) == nodi.get(i).getId()) {
-							nodi.get(j).getEntrate().remove(key2.getKey());
-						}
-					}
-				}
-			}
+		for (Entry<Integer,Integer> key: nodi.get(i).getUscite().entrySet()) {
+			removeArco(key.getKey());
 		}
-		for (Entry<Integer, Double> key : nodi.get(i).getEntrate().entrySet()) {
-			for (int j = 0; j < nodi.size(); j++) {
-				if (nodi.get(j).getId() == key.getKey()) {
-					for (Entry<Integer, Double> key2 : nodi.get(j).getUscite().entrySet()) {
-						if (nodi.get(j).getUscite(key2.getKey()) == nodi.get(i).getId()) {
-							nodi.get(j).getUscite().remove(key2.getKey());
-						}
-					}
-				}
-			}
-		}
-		// se rimuovo un nodo i sui archi devono rimanere all'interno dell'arreyList
-		// altrimenti si sputtanano tutti gli altri quindi sarebbe meglio avere una
-		// mappa per gli archi invece di una lista
 		nodi.remove(i);
 		return true;
 	}
@@ -176,21 +155,22 @@ public class Grafo {
 		} catch (Exception e) {
 			return false;
 		}
-		for (Entry<Integer, Double> key : nodi.get(nodi.indexOf(nodo)).getUscite().entrySet()) {
+		for (Entry<Integer, Integer> key : nodi.get(nodi.indexOf(nodo)).getUscite().entrySet()) {
 			for (int j = 0; j < nodi.size(); j++) {
 				if (nodi.get(j).getId() == key.getKey()) {
-					for (Entry<Integer, Double> key2 : nodi.get(j).getEntrate().entrySet()) {
+					for (Entry<Integer, Integer> key2 : nodi.get(j).getEntrate().entrySet()) {
 						if (nodi.get(j).getEntrate(key2.getKey()) == nodi.get(nodi.indexOf(nodo)).getId()) {
+							removeArco(key2.getKey());
 							nodi.get(j).getEntrate().remove(key2.getKey());
 						}
 					}
 				}
 			}
 		}
-		for (Entry<Integer, Double> key : nodi.get(nodi.indexOf(nodo)).getEntrate().entrySet()) {
+		for (Entry<Integer, Integer> key : nodi.get(nodi.indexOf(nodo)).getEntrate().entrySet()) {
 			for (int j = 0; j < nodi.size(); j++) {
 				if (nodi.get(j).getId() == key.getKey()) {
-					for (Entry<Integer, Double> key2 : nodi.get(j).getUscite().entrySet()) {
+					for (Entry<Integer, Integer> key2 : nodi.get(j).getUscite().entrySet()) {
 						if (nodi.get(j).getUscite(key2.getKey()) == nodi.get(nodi.indexOf(nodo)).getId()) {
 							nodi.get(j).getUscite().remove(key2.getKey());
 						}
@@ -198,9 +178,7 @@ public class Grafo {
 				}
 			}
 		}
-		// se rimuovo un nodo i sui archi devono rimanere all'interno dell'arreyList
-		// altrimenti si sputtanano tutti gli altri quindi sarebbe meglio avere una
-		// mappa per gli archi invece di una lista
+
 		nodi.remove(nodo);
 		return true;
 	}
