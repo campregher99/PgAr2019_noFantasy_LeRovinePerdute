@@ -17,15 +17,15 @@ public class Grafo {
 		this.keyDoppio = keyDoppio;
 		this.keyBooleani = keyBooleani;
 	}
-	
+
 	public ArrayList<String> getKeyStringhe() {
 		return keyStringhe;
 	}
-	
+
 	public ArrayList<String> getKeyDoppio() {
 		return keyDoppio;
 	}
-	
+
 	public ArrayList<String> getKeyBooleani() {
 		return keyBooleani;
 	}
@@ -136,12 +136,12 @@ public class Grafo {
 		}
 		for (int i = 0; i < nodi.size(); i++) {
 			for (Entry<Integer, Integer> key : nodi.get(i).getUscite().entrySet()) {
-				if(nodi.get(i).getUscite(key.getKey())==indice) {
+				if (nodi.get(i).getUscite(key.getKey()) == indice) {
 					nodi.get(i).getUscite().remove(key.getKey());
 				}
 			}
 			for (Entry<Integer, Integer> key : nodi.get(i).getEntrate().entrySet()) {
-				if(nodi.get(i).getEntrate(key.getKey())==indice) {
+				if (nodi.get(i).getEntrate(key.getKey()) == indice) {
 					nodi.get(i).getEntrate().remove(key.getKey());
 				}
 			}
@@ -154,7 +154,7 @@ public class Grafo {
 		if (i < 0 && i > nodi.size()) {
 			return false;
 		}
-		for (Entry<Integer,Integer> key: nodi.get(i).getUscite().entrySet()) {
+		for (Entry<Integer, Integer> key : nodi.get(i).getUscite().entrySet()) {
 			removeArco(key.getKey());
 		}
 		nodi.remove(i);
@@ -220,5 +220,60 @@ public class Grafo {
 			}
 		}
 		return false;
+	}
+
+	public ArrayList<Nodo> dijkstra(Integer idNodoP, Integer idNodoA) {
+		ArrayList<Integer> idNodi = new ArrayList<Integer>();
+		for (int i = 0; i < this.nodi.size(); i++) {
+			idNodi.add(this.nodi.get(i).getId());
+		}
+		ArrayList<Integer> nodi = new ArrayList<Integer>();
+		ArrayList<Integer> distanza0 = new ArrayList<Integer>();
+		ArrayList<Integer> precedente = new ArrayList<Integer>();
+		nodi = idNodi;
+		for (int i = 0; i < nodi.size(); i++) {
+			distanza0.add((int) Double.POSITIVE_INFINITY);
+			precedente.add(-1);
+		}
+
+		distanza0.set(idNodi.indexOf(idNodoP), 0);
+		precedente.set(idNodi.indexOf(idNodoP), nodi.get(idNodi.indexOf(idNodoP)));
+
+		while (idNodi.size() != 0) {
+			int nodoT = 0;
+			for (int i = 0; i < idNodi.size(); i++) {
+				if (distanza0.get(nodi.indexOf(idNodi.get(nodoT))) > distanza0.get(nodi.indexOf(idNodi.get(i)))) {
+					nodoT = nodi.indexOf(idNodi.get(i));
+				}
+			}
+
+			for (Entry<Integer, Integer> key : getNodoPerID(idNodi.get(nodoT)).getUscite().entrySet()) {
+					
+			}
+
+			// ATTENZIONE
+			// ATTENZIONE
+			// ATTENZIONE
+			// ATTENZIONE
+			// ATTENZIONE
+			// ATTENZIONE
+			idNodi.remove(nodoT);
+			// ATTENZIONE
+			// ATTENZIONE
+			// ATTENZIONE
+			// ATTENZIONE
+			// ATTENZIONE
+
+		}
+
+	}
+
+	private Nodo getNodoPerID(int id) {
+		for (int i = 0; i < nodi.size(); i++) {
+			if (nodi.get(i).getId()==id) {
+				return nodi.get(i);
+			}
+		}
+		return null;
 	}
 }
