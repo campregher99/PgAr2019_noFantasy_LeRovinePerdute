@@ -9,11 +9,11 @@ public class StrutturaDati {
 	private ArrayList<StrutturaDati> attributi= new ArrayList<StrutturaDati>();
 	private boolean isText = false;
 
-	protected StrutturaDati(String nome) {
+	public StrutturaDati(String nome) {
 		this.nome = nome;
 	}
 
-	protected StrutturaDati() {
+	public StrutturaDati() {
 		nome="vuoto";
 	}
 	

@@ -42,6 +42,12 @@ public class Grafo {
 		return archi.get(i);
 	}
 
+	public ArrayList<Integer> getArco(Nodo nodo) {
+		ArrayList<Integer> indiciArchi = new ArrayList<Integer>();
+		for(Entry<Integer, Integer> idArco:getNodo(nodo).getUscite().entrySet())
+		return indiciArchi;
+	}
+	
 	public ArrayList<Nodo> getNodi() {
 		return nodi;
 	}
@@ -228,15 +234,15 @@ public class Grafo {
 			idNodi.add(this.nodi.get(i).getId());
 		}
 		ArrayList<Integer> nodi = new ArrayList<Integer>();
-		ArrayList<Integer> distanza0 = new ArrayList<Integer>();
+		ArrayList<Double> distanza0 = new ArrayList<Double>();
 		ArrayList<Integer> precedente = new ArrayList<Integer>();
 		nodi = idNodi;
 		for (int i = 0; i < nodi.size(); i++) {
-			distanza0.add((int) Double.POSITIVE_INFINITY);
+			distanza0.add(Double.POSITIVE_INFINITY);
 			precedente.add(-1);
 		}
 
-		distanza0.set(idNodi.indexOf(idNodoP), 0);
+		distanza0.set(idNodi.indexOf(idNodoP), 0.0);
 		precedente.set(idNodi.indexOf(idNodoP), nodi.get(idNodi.indexOf(idNodoP)));
 
 		while (idNodi.size() != 0) {
@@ -248,29 +254,49 @@ public class Grafo {
 			}
 
 			for (Entry<Integer, Integer> key : getNodoPerID(idNodi.get(nodoT)).getUscite().entrySet()) {
-					
+				for (Integer nodo : idNodi) {
+					if (nodo == key.getValue()) {
+						if (distanza0.get(nodi.get(nodoT))
+								+ archi.get(getNodoPerID(idNodi.get(nodoT)).getUscite().get(nodo)) < distanza0
+										.get(nodi.indexOf(nodo))) {
+							distanza0.set(nodi.indexOf(nodo), (distanza0.get(nodi.get(nodoT))
+									+ archi.get(getNodoPerID(idNodi.get(nodoT)).getUscite().get(nodo))));
+							precedente.set(nodi.indexOf(nodo), nodoT);
+						}
+					}
+				}
+
 			}
 
-			// ATTENZIONE
-			// ATTENZIONE
-			// ATTENZIONE
-			// ATTENZIONE
+			
 			// ATTENZIONE
 			// ATTENZIONE
 			idNodi.remove(nodoT);
-			// ATTENZIONE
-			// ATTENZIONE
-			// ATTENZIONE
-			// ATTENZIONE
-			// ATTENZIONE
+			
 
 		}
+		ArrayList<Nodo> percorso = new ArrayList<Nodo>();
+		int nodoAtt = idNodoA;
+		percorso.add(this.nodi.get(nodoAtt));
+		while (percorso.get(percorso.size() - 1).getId() != idNodoP) {
+			for (Integer nodo : nodi) {
+				if (nodo == nodoAtt) {
+					nodoAtt = precedente.get(nodi.indexOf(nodo));
+					percorso.add(this.nodi.get(nodoAtt));
+				}
+			}
+		}
+		ArrayList<Nodo> app = new ArrayList<Nodo>();
+		for (int i = percorso.size() - 1; i >= 0; i--) {
+			app.add(percorso.get(i));
+		}
+		return app;
 
 	}
 
 	private Nodo getNodoPerID(int id) {
 		for (int i = 0; i < nodi.size(); i++) {
-			if (nodi.get(i).getId()==id) {
+			if (nodi.get(i).getId() == id) {
 				return nodi.get(i);
 			}
 		}

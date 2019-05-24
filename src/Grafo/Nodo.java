@@ -10,6 +10,9 @@ public class Nodo {
 	private HashMap<String, String> stringhe = new HashMap<String, String>();
 	private HashMap<String, Double> doppio = new HashMap<String, Double>();
 	private HashMap<String, Boolean> booleani = new HashMap<String, Boolean>();
+	/**
+	 * HashMap<idArco, nodo>
+	 */
 	private HashMap<Integer, Integer> uscite = new HashMap<Integer, Integer>();
 	private HashMap<Integer, Integer> entrate = new HashMap<Integer, Integer>();
 
