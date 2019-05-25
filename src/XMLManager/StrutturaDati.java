@@ -6,7 +6,7 @@ public class StrutturaDati {
 	private String nome;
 	private HashMap<String, String> tag = new HashMap<String, String>();
 	private ArrayList<String> indiciKey = new ArrayList<String>();
-	private ArrayList<StrutturaDati> attributi= new ArrayList<StrutturaDati>();
+	private ArrayList<StrutturaDati> attributi = new ArrayList<StrutturaDati>();
 	private boolean isText = false;
 
 	public StrutturaDati(String nome) {
@@ -14,9 +14,9 @@ public class StrutturaDati {
 	}
 
 	public StrutturaDati() {
-		nome="vuoto";
+		nome = "vuoto";
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
@@ -25,9 +25,10 @@ public class StrutturaDati {
 		return isText;
 	}
 
-	public HashMap<String, String> getTag(){
+	public HashMap<String, String> getTag() {
 		return tag;
 	}
+
 	public String getTag(String key) {
 		return tag.get(key);
 	}
@@ -38,6 +39,15 @@ public class StrutturaDati {
 
 	public ArrayList<StrutturaDati> getAttributi() {
 		return attributi;
+	}
+
+	public StrutturaDati getAttributo(String tag, String valore) {
+		for (StrutturaDati attributo : attributi) {
+			if (attributo.getTag(tag).equals(valore)) {
+				return attributo;
+			}
+		}
+		return null;
 	}
 
 	public void setNome(String nome) {

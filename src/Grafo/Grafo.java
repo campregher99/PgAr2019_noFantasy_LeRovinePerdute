@@ -42,9 +42,11 @@ public class Grafo {
 		return archi.get(i);
 	}
 
-	public ArrayList<Integer> getArco(Nodo nodo) {
+	public ArrayList<Integer> getArchi(Nodo nodo) {
 		ArrayList<Integer> indiciArchi = new ArrayList<Integer>();
-		for(Entry<Integer, Integer> idArco:getNodo(nodo).getUscite().entrySet())
+		for(Entry<Integer, Integer> idArco:getNodo(nodo).getUscite().entrySet()) {
+			indiciArchi.add(idArco.getKey());
+		}
 		return indiciArchi;
 	}
 	

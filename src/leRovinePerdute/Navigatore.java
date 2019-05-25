@@ -35,33 +35,93 @@ public class Navigatore {
 		}
 		for (Nodo nodo : mappaM1.getNodi()) {
 			boolean isEsiste = false;
-			for (StrutturaDati attributo : XML.getFile().getAttributi()) {
-				if ((double) Integer.valueOf(attributo.getTag(attDbl.get(0))) == nodo.getDoppio(attDbl.get(0))) {
-					
-				}
-			}
-			for (StrutturaDati attributo : XML.getFile().getAttributi().get(i).getAttributi()) {
-				for (Entry<Integer, Integer> uscita : mappaM1
-						.getNodo(attDbl.get(0), mappaM1.getNodo(mappaM1.getNodi().size() - 1).getDoppio(attDbl.get(0)))
-						.getUscite().entrySet()) {
-					if (uscita.getValue() == Integer.valueOf(attributo.getTag(attDbl.get(0)))) {
-						isEsiste = true;
-						break;
+			for (StrutturaDati elemento : XML.getFile().getAttributi()) {
+				if ((double) Integer.valueOf(elemento.getTag(attDbl.get(0))) == nodo.getDoppio(attDbl.get(0))) {
+					for (StrutturaDati attributo : elemento.getAttributi()) {
+						for (Entry<Integer, Integer> uscita : nodo.getUscite().entrySet()) {
+							if (uscita.getValue() == Integer.valueOf(attributo.getTag("to"))) {
+								isEsiste = true;
+								break;
+							}
+						}
+						if (!isEsiste) {
+							Nodo nodo1 = new Nodo();
+							Nodo nodo2 = new Nodo();
+							double valore = 0;
+							nodo1 = nodo;
+							nodo2 = mappaM1.getNodo(attDbl.get(0), (double) Integer.valueOf(attributo.getTag("to")));
+							valore = Math
+									.sqrt(Math
+											.hypot(Integer
+													.valueOf(XML.getFile()
+															.getAttributo("id",
+																	Double.toString(nodo2.getDoppio(attDbl.get(0))))
+															.getTag("x"))
+													- Integer.valueOf(XML
+															.getFile()
+															.getAttributo("id",
+																	Double.toString(nodo1.getDoppio(attDbl.get(0))))
+															.getTag("x")),
+													Integer.valueOf(XML.getFile()
+															.getAttributo("id",
+																	Double.toString(nodo2.getDoppio(attDbl.get(0))))
+															.getTag("y"))
+															- Integer.valueOf(XML.getFile()
+																	.getAttributo("id",
+																			Double.toString(
+																					nodo1.getDoppio(attDbl.get(0))))
+																	.getTag("y"))));
+							mappaM1.aggiungiArco(nodo1, nodo2, valore);
+							isEsiste = false;
+						}
 					}
 				}
 			}
-			if (!isEsiste) {
-				Nodo nodo1 = new Nodo();
-				Nodo nodo2 = new Nodo();
-				double valore = 0;
-				nodo1 = mappaM1.getNodo(attDbl.get(0),
-						(double) Integer.valueOf(XML.getFile().getAttributi().get(i).getTag("id")));
-
-				mappaM1.aggiungiArco(nodo1, nodo2, valore);
-			}
 		}
 		for (Nodo nodo : mappaM2.getNodi()) {
-
+			boolean isEsiste = false;
+			for (StrutturaDati elemento : XML.getFile().getAttributi()) {
+				if ((double) Integer.valueOf(elemento.getTag(attDbl.get(0))) == nodo.getDoppio(attDbl.get(0))) {
+					for (StrutturaDati attributo : elemento.getAttributi()) {
+						for (Entry<Integer, Integer> uscita : nodo.getUscite().entrySet()) {
+							if (uscita.getValue() == Integer.valueOf(attributo.getTag("to"))) {
+								isEsiste = true;
+								break;
+							}
+						}
+						if (!isEsiste) {
+							Nodo nodo1 = new Nodo();
+							Nodo nodo2 = new Nodo();
+							double valore = 0;
+							nodo1 = nodo;
+							nodo2 = mappaM1.getNodo(attDbl.get(0), (double) Integer.valueOf(attributo.getTag("to")));
+							valore = Math
+									.sqrt(Math
+											.hypot(Integer
+													.valueOf(XML.getFile()
+															.getAttributo("id",
+																	Double.toString(nodo2.getDoppio(attDbl.get(0))))
+															.getTag("x"))
+													- Integer.valueOf(XML
+															.getFile()
+															.getAttributo("id",
+																	Double.toString(nodo1.getDoppio(attDbl.get(0))))
+															.getTag("x")),
+													Integer.valueOf(XML.getFile()
+															.getAttributo("id",
+																	Double.toString(nodo2.getDoppio(attDbl.get(0))))
+															.getTag("y"))
+															- Integer.valueOf(XML.getFile()
+																	.getAttributo("id",
+																			Double.toString(
+																					nodo1.getDoppio(attDbl.get(0))))
+																	.getTag("y"))));
+							mappaM2.aggiungiArco(nodo1, nodo2, valore);
+							isEsiste = false;
+						}
+					}
+				}
+			}
 		}
 	}
 }
