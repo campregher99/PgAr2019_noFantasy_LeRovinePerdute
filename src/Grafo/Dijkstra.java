@@ -8,6 +8,21 @@ public class Dijkstra {
 	ArrayList<Integer> precedente = new ArrayList<Integer>();
 	ArrayList<Integer> idNodi = new ArrayList<Integer>();
 
+// GET
+	public int getIdNodiSize() {
+		return idNodi.size();
+	}
+
+	public int getNodoMinValore(Integer nodoPartenza) {
+		for (Integer nodo : idNodi) {
+			if (distanza0.get(nodi.indexOf(idNodi.get(nodoPartenza))) > distanza0.get(nodi.indexOf(nodo))) {
+				return nodi.indexOf(nodo);
+			}
+		}
+		return (Integer) null;
+	}
+
+// ADD
 	public void addNodo(Nodo nodo) {
 		nodi.add(nodo.getId());
 		idNodi.add(nodo.getId());
@@ -30,6 +45,7 @@ public class Dijkstra {
 		precedente.add(idNodo);
 	}
 
+// SET
 	public void setDistanzaO(Nodo nodo, Double newDistanza) {
 		distanza0.set(idNodi.indexOf(nodo.getId()), 0.0);
 	}
@@ -54,12 +70,4 @@ public class Dijkstra {
 		this.precedente.set(idNodi.indexOf(nodo.getId()), idPrecedente);
 	}
 
-	public int getNodoMinValore(Integer nodoPartenza) {
-		for (Integer nodo : idNodi) {
-			if (distanza0.get(nodi.indexOf(idNodi.get(nodoPartenza))) > distanza0.get(nodi.indexOf(nodo))) {
-				return nodi.indexOf(nodo);
-			}
-		}
-		return (Integer) null;
-	}
 }

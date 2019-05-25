@@ -240,12 +240,12 @@ public class Grafo {
 			dk.addPrecedente(-1);
 		}
 
-		distanza0.set(idNodi.indexOf(idNodoP), 0.0);
-		precedente.set(idNodi.indexOf(idNodoP), nodi.get(idNodi.indexOf(idNodoP)));
+		dk.setDistanzaO(idNodoP, 0.0);
+		dk.setPrecedente(idNodoP, idNodoP);
 
-		while (idNodi.size() != 0) {
+		while (dk.getIdNodiSize() != 0) {
 			int nodoT = 0;
-			for (int i = 0; i < idNodi.size(); i++) {
+			for (int i = 0; i < dk.getIdNodiSize(); i++) {
 				if (distanza0.get(nodi.indexOf(idNodi.get(nodoT))) > distanza0.get(nodi.indexOf(idNodi.get(i)))) {
 					nodoT = nodi.indexOf(idNodi.get(i));
 				}
