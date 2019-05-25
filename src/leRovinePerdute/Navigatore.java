@@ -95,27 +95,11 @@ public class Navigatore {
 							double valore = 0;
 							nodo1 = nodo;
 							nodo2 = mappaM1.getNodo(attDbl.get(0), (double) Integer.valueOf(attributo.getTag("to")));
-							valore = Math
-									.sqrt(Math
-											.hypot(Integer
-													.valueOf(XML.getFile()
-															.getAttributo("id",
-																	Double.toString(nodo2.getDoppio(attDbl.get(0))))
-															.getTag("x"))
-													- Integer.valueOf(XML
-															.getFile()
-															.getAttributo("id",
-																	Double.toString(nodo1.getDoppio(attDbl.get(0))))
-															.getTag("x")),
-													Integer.valueOf(XML.getFile()
-															.getAttributo("id",
-																	Double.toString(nodo2.getDoppio(attDbl.get(0))))
-															.getTag("y"))
-															- Integer.valueOf(XML.getFile()
-																	.getAttributo("id",
-																			Double.toString(
-																					nodo1.getDoppio(attDbl.get(0))))
-																	.getTag("y"))));
+							valore = Integer.valueOf(XML.getFile()
+									.getAttributo("id", Double.toString(nodo2.getDoppio(attDbl.get(0)))).getTag("h"))
+									- Integer.valueOf(XML.getFile()
+											.getAttributo("id", Double.toString(nodo1.getDoppio(attDbl.get(0))))
+											.getTag("h"));
 							mappaM2.aggiungiArco(nodo1, nodo2, valore);
 							isEsiste = false;
 						}
