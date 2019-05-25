@@ -44,12 +44,12 @@ public class Grafo {
 
 	public ArrayList<Integer> getArchi(Nodo nodo) {
 		ArrayList<Integer> indiciArchi = new ArrayList<Integer>();
-		for(Entry<Integer, Integer> idArco:getNodo(nodo).getUscite().entrySet()) {
+		for (Entry<Integer, Integer> idArco : getNodo(nodo).getUscite().entrySet()) {
 			indiciArchi.add(idArco.getKey());
 		}
 		return indiciArchi;
 	}
-	
+
 	public ArrayList<Nodo> getNodi() {
 		return nodi;
 	}
@@ -231,17 +231,13 @@ public class Grafo {
 	}
 
 	public ArrayList<Nodo> dijkstra(Integer idNodoP, Integer idNodoA) {
-		ArrayList<Integer> idNodi = new ArrayList<Integer>();
+		Dijkstra dk = new Dijkstra();
 		for (int i = 0; i < this.nodi.size(); i++) {
-			idNodi.add(this.nodi.get(i).getId());
+			dk.addNodo(this.nodi.get(i));
 		}
-		ArrayList<Integer> nodi = new ArrayList<Integer>();
-		ArrayList<Double> distanza0 = new ArrayList<Double>();
-		ArrayList<Integer> precedente = new ArrayList<Integer>();
-		nodi = idNodi;
 		for (int i = 0; i < nodi.size(); i++) {
-			distanza0.add(Double.POSITIVE_INFINITY);
-			precedente.add(-1);
+			dk.addDistanzaO(Double.POSITIVE_INFINITY);
+			dk.addPrecedente(-1);
 		}
 
 		distanza0.set(idNodi.indexOf(idNodoP), 0.0);
@@ -270,11 +266,9 @@ public class Grafo {
 
 			}
 
-			
 			// ATTENZIONE
 			// ATTENZIONE
 			idNodi.remove(nodoT);
-			
 
 		}
 		ArrayList<Nodo> percorso = new ArrayList<Nodo>();

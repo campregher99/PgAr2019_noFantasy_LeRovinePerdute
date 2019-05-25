@@ -108,4 +108,25 @@ public class Navigatore {
 			}
 		}
 	}
+
+	public boolean stampaResoconto() {
+		ArrayList<Nodo> percorso1 = new ArrayList<Nodo>();
+		ArrayList<Nodo> percorso2 = new ArrayList<Nodo>();
+		double distanzaTot1 = 0;
+		double dislivelloTot2;
+		StrutturaDati output = new StrutturaDati("routes");
+		percorso1 = mappaM1.dijkstra(Integer.valueOf(XML.getFile().getAttributo("name", "campo base").getTag("id")),
+				Integer.valueOf(XML.getFile().getAttributo("name", "Rovine Perdute").getTag("id")));
+		percorso2 = mappaM1.dijkstra(Integer.valueOf(XML.getFile().getAttributo("name", "campo base").getTag("id")),
+				Integer.valueOf(XML.getFile().getAttributo("name", "Rovine Perdute").getTag("id")));
+		StrutturaDati newAttributo = new StrutturaDati("route");
+		newAttributo.addTag("team", "Tonatiuh");
+		for (Nodo nodo : percorso1) {
+
+		}
+		newAttributo.addTag("cost", Double.toString(distanzaTot1));
+
+		output.addAttributo(newAttributo);
+		return false;
+	}
 }
