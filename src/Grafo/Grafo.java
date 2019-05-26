@@ -116,11 +116,11 @@ public class Grafo {
 			if (nodo1.getId() == nodi.get(i).getId()) {
 				isFind1 = true;
 			}
-			if (nodo2.getId() == nodi.get(i).getId() && isFind1) {
+			if (nodo2.getId() == nodi.get(i).getId()) {
 				isFind2 = true;
 			}
 		}
-		if (!isFind2) {
+		if (!isFind2 || !isFind1) {
 			return false;
 		}
 		archi.put(indiciArchi, valore);
@@ -246,17 +246,20 @@ public class Grafo {
 		while (dk.getIdNodiSize() != 0) {
 			int nodoT = dk.getNodoMinValore();
 
-			for (Entry<Integer, Integer> key : vuoto.getNodoPerID(nodoT,this.nodi).getUscite().entrySet()) {
+			for (Entry<Integer, Integer> key : vuoto.getNodoPerID(nodoT, this.nodi).getUscite().entrySet()) {
 				for (Integer nodo : dk.getIdNodi()) {
+
 					if (nodo == key.getKey()) {
-						if (dk.getDistanza(nodoT) + archi.get(vuoto.getNodoPerID(nodoT,nodi).getUscite().get(key.getKey())) < dk
-								.getDistanza(nodo)) {
-							dk.setDistanzaO(dk.getIndiceNodo(nodo),
-									(dk.getDistanza(nodoT) + archi.get(vuoto.getNodoPerID(nodoT,nodi).getUscite().get(key.getKey()))));
+						if (dk.getDistanza(nodoT)
+								+ archi.get(vuoto.getNodoPerID(nodoT, nodi).getUscite().get(key.getKey())) < dk
+										.getDistanza(nodo)) {
+							dk.setDistanzaO(dk.getIndiceNodo(nodo), (dk.getDistanza(nodoT)
+									+ archi.get(vuoto.getNodoPerID(nodoT, nodi).getUscite().get(key.getKey()))));
 							dk.setPrecedente(dk.getIndiceNodo(nodo), nodoT);
-							
+
 						}
 					}
+
 				}
 
 			}
@@ -266,11 +269,10 @@ public class Grafo {
 			dk.removeNodo(nodoT);
 
 		}
-		
+
 		dk.calcoloPercorso(idNodoP, idNodoA, this.nodi);
 		return dk;
 
 	}
 
-	
 }

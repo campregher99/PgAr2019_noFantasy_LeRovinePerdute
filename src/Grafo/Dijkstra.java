@@ -20,9 +20,12 @@ public class Dijkstra {
 		if (idNodi.size() != 0) {
 			Integer nodoMin = idNodi.get(0);
 			for (Integer nodo : idNodi) {
-				if (distanza0.get(nodi.indexOf(nodoMin)) > distanza0.get(nodi.indexOf(nodo))) {
-					nodoMin = nodo;
+				if (getPrecedente(nodo) != -1) {
+					if (distanza0.get(nodi.indexOf(nodoMin)) > distanza0.get(nodi.indexOf(nodo))) {
+						nodoMin = nodo;
+					}
 				}
+				
 			}
 			return nodoMin;
 		}
@@ -143,10 +146,11 @@ public class Dijkstra {
 				if (nodo == nodoAtt) {
 					nodoAtt = getPrecedente(nodo);
 					percorso.add(vuoto.getNodoPerID(nodoAtt, nodi));
+					break;
 				}
 			}
 		}
-		
+
 		ArrayList<Nodo> app = new ArrayList<Nodo>();
 		for (int i = percorso.size() - 1; i >= 0; i--) {
 			app.add(percorso.get(i));
