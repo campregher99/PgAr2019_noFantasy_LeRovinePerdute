@@ -230,7 +230,7 @@ public class Grafo {
 		return false;
 	}
 
-	public ArrayList<Nodo> dijkstra(Integer idNodoP, Integer idNodoA) {
+	public Dijkstra dijkstra(Integer idNodoP, Integer idNodoA) {
 		Dijkstra dk = new Dijkstra();
 		for (int i = 0; i < this.nodi.size(); i++) {
 			dk.addNodo(this.nodi.get(i));
@@ -244,22 +244,16 @@ public class Grafo {
 		dk.setPrecedente(idNodoP, idNodoP);
 
 		while (dk.getIdNodiSize() != 0) {
-			int nodoT = 0;
-			for (int i = 0; i < dk.getIdNodiSize(); i++) {
-				if (dk.getDistanza(nodoT) > dk.getDistanza(i)) {
-					nodoT = dk.getNodoId(i);
-				}
-			}
+			int nodoT = dk.getNodoMinValore(idNodoP);
 
 			for (Entry<Integer, Integer> key : getNodoPerID(dk.getNodoId(nodoT)).getUscite().entrySet()) {
 				for (Integer nodo : dk.getIdNodi()) {
 					if (nodo == key.getValue()) {
-						if (distanza0.get(nodi.get(nodoT))
-								+ archi.get(getNodoPerID(idNodi.get(nodoT)).getUscite().get(nodo)) < distanza0
-										.get(nodi.indexOf(nodo))) {
-							distanza0.set(nodi.indexOf(nodo), (distanza0.get(nodi.get(nodoT))
-									+ archi.get(getNodoPerID(idNodi.get(nodoT)).getUscite().get(nodo))));
-							precedente.set(nodi.indexOf(nodo), nodoT);
+						if (dk.getDistanza(nodoT) + archi.get(getNodoPerID(nodoT).getUscite().get(nodo)) < dk
+								.getDistanza(nodo)) {
+							dk.setDistanzaO(dk.getIndiceNodo(nodo),
+									(dk.getDistanza(nodoT) + archi.get(getNodoPerID(nodoT).getUscite().get(nodo))));
+							dk.setPrecedente(dk.getIndiceNodo(nodo), nodoT);
 						}
 					}
 				}
@@ -268,25 +262,12 @@ public class Grafo {
 
 			// ATTENZIONE
 			// ATTENZIONE
-			idNodi.remove(nodoT);
+			dk.removeNodo(nodoT);
 
 		}
-		ArrayList<Nodo> percorso = new ArrayList<Nodo>();
-		int nodoAtt = idNodoA;
-		percorso.add(this.nodi.get(nodoAtt));
-		while (percorso.get(percorso.size() - 1).getId() != idNodoP) {
-			for (Integer nodo : nodi) {
-				if (nodo == nodoAtt) {
-					nodoAtt = precedente.get(nodi.indexOf(nodo));
-					percorso.add(this.nodi.get(nodoAtt));
-				}
-			}
-		}
-		ArrayList<Nodo> app = new ArrayList<Nodo>();
-		for (int i = percorso.size() - 1; i >= 0; i--) {
-			app.add(percorso.get(i));
-		}
-		return app;
+		
+		dk.calcoloPercorso(idNodoP, idNodoA, this.nodi);
+		return dk;
 
 	}
 

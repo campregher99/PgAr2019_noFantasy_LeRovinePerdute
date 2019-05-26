@@ -51,26 +51,27 @@ public class Navigatore {
 							nodo1 = nodo;
 							nodo2 = mappaM1.getNodo(attDbl.get(0), (double) Integer.valueOf(attributo.getTag("to")));
 							valore = Math
-									.sqrt(Math
-											.hypot(Integer
-													.valueOf(XML.getFile()
-															.getAttributo("id",
-																	Double.toString(nodo2.getDoppio(attDbl.get(0))))
-															.getTag("x"))
+									.sqrt(Math.hypot(
+											Integer.valueOf(XML
+													.getFile()
+													.getAttributo("id",
+															Integer.toString(
+																	(int) Math.floor(nodo2.getDoppio(attDbl.get(0)))))
+													.getTag("x"))
 													- Integer.valueOf(XML
 															.getFile()
-															.getAttributo("id",
-																	Double.toString(nodo1.getDoppio(attDbl.get(0))))
+															.getAttributo("id", Integer.toString(
+																	(int) Math.floor(nodo1.getDoppio(attDbl.get(0)))))
 															.getTag("x")),
-													Integer.valueOf(XML.getFile()
-															.getAttributo("id",
-																	Double.toString(nodo2.getDoppio(attDbl.get(0))))
-															.getTag("y"))
-															- Integer.valueOf(XML.getFile()
-																	.getAttributo("id",
-																			Double.toString(
-																					nodo1.getDoppio(attDbl.get(0))))
-																	.getTag("y"))));
+											Integer.valueOf(XML.getFile()
+													.getAttributo("id",
+															Integer.toString(
+																	(int) Math.floor(nodo2.getDoppio(attDbl.get(0)))))
+													.getTag("y"))
+													- Integer.valueOf(XML.getFile()
+															.getAttributo("id", Integer.toString(
+																	(int) Math.floor(nodo1.getDoppio(attDbl.get(0)))))
+															.getTag("y"))));
 							mappaM1.aggiungiArco(nodo1, nodo2, valore);
 							isEsiste = false;
 						}
@@ -96,9 +97,9 @@ public class Navigatore {
 							nodo1 = nodo;
 							nodo2 = mappaM1.getNodo(attDbl.get(0), (double) Integer.valueOf(attributo.getTag("to")));
 							valore = Integer.valueOf(XML.getFile()
-									.getAttributo("id", Double.toString(nodo2.getDoppio(attDbl.get(0)))).getTag("h"))
+									.getAttributo("id", Integer.toString((int)Math.floor(nodo2.getDoppio(attDbl.get(0))))).getTag("h"))
 									- Integer.valueOf(XML.getFile()
-											.getAttributo("id", Double.toString(nodo1.getDoppio(attDbl.get(0))))
+											.getAttributo("id", Integer.toString((int)Math.floor(nodo1.getDoppio(attDbl.get(0)))))
 											.getTag("h"));
 							mappaM2.aggiungiArco(nodo1, nodo2, valore);
 							isEsiste = false;
@@ -110,23 +111,40 @@ public class Navigatore {
 	}
 
 	public boolean stampaResoconto() {
-		ArrayList<Nodo> percorso1 = new ArrayList<Nodo>();
-		ArrayList<Nodo> percorso2 = new ArrayList<Nodo>();
-		double distanzaTot1 = 0;
-		double dislivelloTot2;
+		Dijkstra percorso1 = new Dijkstra();
+		Dijkstra percorso2 = new Dijkstra();
 		StrutturaDati output = new StrutturaDati("routes");
+
 		percorso1 = mappaM1.dijkstra(Integer.valueOf(XML.getFile().getAttributo("name", "campo base").getTag("id")),
 				Integer.valueOf(XML.getFile().getAttributo("name", "Rovine Perdute").getTag("id")));
 		percorso2 = mappaM1.dijkstra(Integer.valueOf(XML.getFile().getAttributo("name", "campo base").getTag("id")),
 				Integer.valueOf(XML.getFile().getAttributo("name", "Rovine Perdute").getTag("id")));
 		StrutturaDati newAttributo = new StrutturaDati("route");
+
 		newAttributo.addTag("team", "Tonatiuh");
-		for (Nodo nodo : percorso1) {
-
+		newAttributo.addTag("cost", Double.toString(percorso1.getDistanzaMinima()));
+		newAttributo.addTag("cities", Integer.toString(percorso1.getPercorso().size()));
+		for (Nodo nodo : percorso1.getPercorso()) {
+			StrutturaDati città = new StrutturaDati("city");
+			città.addTag("id", Integer.toString(nodo.getId()));
+			città.addTag("name", nodo.getStringhe("name"));
+			newAttributo.addAttributo(città);
 		}
-		newAttributo.addTag("cost", Double.toString(distanzaTot1));
-
 		output.addAttributo(newAttributo);
+
+		newAttributo = new StrutturaDati("route");
+		newAttributo.addTag("team", "Metztli");
+		newAttributo.addTag("cost", Double.toString(percorso2.getDistanzaMinima()));
+		newAttributo.addTag("cities", Integer.toString(percorso2.getPercorso().size()));
+		for (Nodo nodo : percorso2.getPercorso()) {
+			StrutturaDati città = new StrutturaDati("city");
+			città.addTag("id", Integer.toString(nodo.getId()));
+			città.addTag("name", nodo.getStringhe("name"));
+			newAttributo.addAttributo(città);
+		}
+		output.addAttributo(newAttributo);
+
+		XML.scriviFile(output, "Routes", "utf-8", "1.0");
 		return false;
 	}
 }

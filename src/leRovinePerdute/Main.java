@@ -3,8 +3,9 @@ package leRovinePerdute;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		Navigatore tomtom=new Navigatore();
+		tomtom.grafo();
+		tomtom.stampaResoconto();
 	}
 
 }
