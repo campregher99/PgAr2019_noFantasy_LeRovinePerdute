@@ -22,6 +22,22 @@ public class Dijkstra {
 		return (Integer) null;
 	}
 
+	public Double getDistanza(Nodo nodo) {
+		return distanza0.get(nodi.indexOf(nodo.getId()));
+	}
+
+	public Double getDistanza(Integer idNodo) {
+		return distanza0.get(nodi.indexOf(idNodo));
+	}
+
+	public int getNodoId(int i) {
+		return idNodi.get(i);
+	}
+
+	public ArrayList<Integer> getIdNodi() {
+		return idNodi;
+	}
+
 // ADD
 	public void addNodo(Nodo nodo) {
 		nodi.add(nodo.getId());

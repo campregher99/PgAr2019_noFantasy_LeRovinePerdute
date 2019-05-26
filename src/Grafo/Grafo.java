@@ -246,13 +246,13 @@ public class Grafo {
 		while (dk.getIdNodiSize() != 0) {
 			int nodoT = 0;
 			for (int i = 0; i < dk.getIdNodiSize(); i++) {
-				if (distanza0.get(nodi.indexOf(idNodi.get(nodoT))) > distanza0.get(nodi.indexOf(idNodi.get(i)))) {
-					nodoT = nodi.indexOf(idNodi.get(i));
+				if (dk.getDistanza(nodoT) > dk.getDistanza(i)) {
+					nodoT = dk.getNodoId(i);
 				}
 			}
 
-			for (Entry<Integer, Integer> key : getNodoPerID(idNodi.get(nodoT)).getUscite().entrySet()) {
-				for (Integer nodo : idNodi) {
+			for (Entry<Integer, Integer> key : getNodoPerID(dk.getNodoId(nodoT)).getUscite().entrySet()) {
+				for (Integer nodo : dk.getIdNodi()) {
 					if (nodo == key.getValue()) {
 						if (distanza0.get(nodi.get(nodoT))
 								+ archi.get(getNodoPerID(idNodi.get(nodoT)).getUscite().get(nodo)) < distanza0
