@@ -244,16 +244,17 @@ public class Grafo {
 		dk.setPrecedente(idNodoP, idNodoP);
 
 		while (dk.getIdNodiSize() != 0) {
-			int nodoT = dk.getNodoMinValore(idNodoP);
+			int nodoT = dk.getNodoMinValore();
 
-			for (Entry<Integer, Integer> key : getNodoPerID(dk.getNodoId(nodoT)).getUscite().entrySet()) {
+			for (Entry<Integer, Integer> key : vuoto.getNodoPerID(nodoT,this.nodi).getUscite().entrySet()) {
 				for (Integer nodo : dk.getIdNodi()) {
-					if (nodo == key.getValue()) {
-						if (dk.getDistanza(nodoT) + archi.get(getNodoPerID(nodoT).getUscite().get(nodo)) < dk
+					if (nodo == key.getKey()) {
+						if (dk.getDistanza(nodoT) + archi.get(vuoto.getNodoPerID(nodoT,nodi).getUscite().get(key.getKey())) < dk
 								.getDistanza(nodo)) {
 							dk.setDistanzaO(dk.getIndiceNodo(nodo),
-									(dk.getDistanza(nodoT) + archi.get(getNodoPerID(nodoT).getUscite().get(nodo))));
+									(dk.getDistanza(nodoT) + archi.get(vuoto.getNodoPerID(nodoT,nodi).getUscite().get(key.getKey()))));
 							dk.setPrecedente(dk.getIndiceNodo(nodo), nodoT);
+							
 						}
 					}
 				}
@@ -271,12 +272,5 @@ public class Grafo {
 
 	}
 
-	private Nodo getNodoPerID(int id) {
-		for (int i = 0; i < nodi.size(); i++) {
-			if (nodi.get(i).getId() == id) {
-				return nodi.get(i);
-			}
-		}
-		return null;
-	}
+	
 }

@@ -115,10 +115,10 @@ public class Navigatore {
 		Dijkstra percorso2 = new Dijkstra();
 		StrutturaDati output = new StrutturaDati("routes");
 
-		percorso1 = mappaM1.dijkstra(Integer.valueOf(XML.getFile().getAttributo("name", "campo base").getTag("id")),
-				Integer.valueOf(XML.getFile().getAttributo("name", "Rovine Perdute").getTag("id")));
-		percorso2 = mappaM1.dijkstra(Integer.valueOf(XML.getFile().getAttributo("name", "campo base").getTag("id")),
-				Integer.valueOf(XML.getFile().getAttributo("name", "Rovine Perdute").getTag("id")));
+		percorso1 = mappaM1.dijkstra(mappaM1.getNodo("id", Double.valueOf(XML.getFile().getAttributo("name", "campo base").getTag("id"))).getId(),
+				mappaM1.getNodo("id",Double.valueOf(XML.getFile().getAttributo("name", "Rovine Perdute").getTag("id"))).getId());
+		percorso2 = mappaM1.dijkstra(mappaM2.getNodo("id",Double.valueOf(XML.getFile().getAttributo("name", "campo base").getTag("id"))).getId(),
+				mappaM2.getNodo("id",Double.valueOf(XML.getFile().getAttributo("name", "Rovine Perdute").getTag("id"))).getId());
 		StrutturaDati newAttributo = new StrutturaDati("route");
 
 		newAttributo.addTag("team", "Tonatiuh");
@@ -127,7 +127,7 @@ public class Navigatore {
 		for (Nodo nodo : percorso1.getPercorso()) {
 			StrutturaDati città = new StrutturaDati("city");
 			città.addTag("id", Integer.toString(nodo.getId()));
-			città.addTag("name", nodo.getStringhe("name"));
+			città.addTag("name", nodo.getStringhe("nome"));
 			newAttributo.addAttributo(città);
 		}
 		output.addAttributo(newAttributo);
@@ -139,7 +139,7 @@ public class Navigatore {
 		for (Nodo nodo : percorso2.getPercorso()) {
 			StrutturaDati città = new StrutturaDati("city");
 			città.addTag("id", Integer.toString(nodo.getId()));
-			città.addTag("name", nodo.getStringhe("name"));
+			città.addTag("name", nodo.getStringhe("nome"));
 			newAttributo.addAttributo(città);
 		}
 		output.addAttributo(newAttributo);

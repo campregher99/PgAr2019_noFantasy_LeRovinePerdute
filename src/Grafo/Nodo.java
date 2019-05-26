@@ -11,7 +11,7 @@ public class Nodo {
 	private HashMap<String, Double> doppio = new HashMap<String, Double>();
 	private HashMap<String, Boolean> booleani = new HashMap<String, Boolean>();
 	/**
-	 * HashMap<idArco, nodo>
+	 * HashMap<nodo, idArco>
 	 */
 	private HashMap<Integer, Integer> uscite = new HashMap<Integer, Integer>();
 	private HashMap<Integer, Integer> entrate = new HashMap<Integer, Integer>();
@@ -132,5 +132,14 @@ public class Nodo {
 			}
 		}
 		return false;
+	}
+	
+	public Nodo getNodoPerID(int id, ArrayList<Nodo> nodi) {
+		for (int i = 0; i < nodi.size(); i++) {
+			if (nodi.get(i).getId() == id) {
+				return nodi.get(i);
+			}
+		}
+		return null;
 	}
 }

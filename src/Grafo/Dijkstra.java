@@ -9,17 +9,22 @@ public class Dijkstra {
 	private ArrayList<Integer> idNodi = new ArrayList<Integer>();
 	private ArrayList<Nodo> percorso = new ArrayList<Nodo>();
 	private double distanzaMinima;
+	private Nodo vuoto = new Nodo();
 
 // GET
 	public int getIdNodiSize() {
 		return idNodi.size();
 	}
 
-	public int getNodoMinValore(Integer nodoPartenza) {
-		for (Integer nodo : idNodi) {
-			if (distanza0.get(nodi.indexOf(idNodi.get(nodoPartenza))) > distanza0.get(nodi.indexOf(nodo))) {
-				return nodi.indexOf(nodo);
+	public int getNodoMinValore() {
+		if (idNodi.size() != 0) {
+			Integer nodoMin = idNodi.get(0);
+			for (Integer nodo : idNodi) {
+				if (distanza0.get(nodi.indexOf(nodoMin)) > distanza0.get(nodi.indexOf(nodo))) {
+					nodoMin = nodo;
+				}
 			}
+			return nodoMin;
 		}
 		return (Integer) null;
 	}
@@ -50,10 +55,6 @@ public class Dijkstra {
 
 	public ArrayList<Integer> getNodi() {
 		return nodi;
-	}
-
-	public int getPrecedente(int i) {
-		return precedente.get(i);
 	}
 
 	public int getPrecedente(Integer idNodo) {
@@ -101,11 +102,11 @@ public class Dijkstra {
 
 	// SET
 	public void setDistanzaO(Nodo nodo, Double newDistanza) {
-		distanza0.set(idNodi.indexOf(nodo.getId()), 0.0);
+		distanza0.set(idNodi.indexOf(nodo.getId()), newDistanza);
 	}
 
 	public void setDistanzaO(Integer idNodo, Double newDistanza) {
-		distanza0.set(idNodi.indexOf(idNodo), 0.0);
+		distanza0.set(idNodo, newDistanza);
 	}
 
 	public void setPrecedente(Nodo nodo, Nodo precedente) {
@@ -117,7 +118,7 @@ public class Dijkstra {
 	}
 
 	public void setPrecedente(Integer idNodo, Integer idPrecedente) {
-		this.precedente.set(idNodi.indexOf(idNodo), idPrecedente);
+		this.precedente.set(idNodo, idPrecedente);
 	}
 
 	public void setPrecedente(Nodo nodo, Integer idPrecedente) {
@@ -136,20 +137,22 @@ public class Dijkstra {
 	// ALTRO
 	public void calcoloPercorso(Integer idNodoP, Integer idNodoA, ArrayList<Nodo> nodi) {
 		int nodoAtt = idNodoA;
-		percorso.add(nodi.get(nodoAtt));
+		percorso.add(vuoto.getNodoPerID(nodoAtt, nodi));
 		while (percorso.get(percorso.size() - 1).getId() != idNodoP) {
 			for (Integer nodo : getNodi()) {
 				if (nodo == nodoAtt) {
 					nodoAtt = getPrecedente(nodo);
-					percorso.add(nodi.get(nodoAtt));
+					percorso.add(vuoto.getNodoPerID(nodoAtt, nodi));
 				}
 			}
 		}
+		
 		ArrayList<Nodo> app = new ArrayList<Nodo>();
 		for (int i = percorso.size() - 1; i >= 0; i--) {
 			app.add(percorso.get(i));
 		}
 		percorso = app;
-		distanzaMinima = distanza0.get(nodi.indexOf(idNodoA));
+		distanzaMinima = distanza0.get(this.nodi.indexOf(idNodoA));
 	}
+
 }
